@@ -1,0 +1,7 @@
+Vehicle [make=Honda, model=accord, price=12000, fourWDrive=false]
+Vehicle [make=Toyota, model=Camery, price=12000, fourWDrive=false]
+Vehicle [make=Jeep, model=Wrangler, price=25000, fourWDrive=true]
+Lion
+cat
+Dog
+Bird

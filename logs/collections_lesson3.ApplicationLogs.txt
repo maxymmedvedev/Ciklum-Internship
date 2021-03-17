@@ -1,0 +1,4 @@
+Animal [name=Dog, age=12]
+Animal [name=Bird, age=3]
+Animal [name=Kangaroo, age=24]
+Animal [name=Cat, age=8]

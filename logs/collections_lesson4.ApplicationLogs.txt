@@ -1,0 +1,2 @@
+[Employee [name=Peter, salary=4000, department=IT], Employee [name=Mike, salary=3500, department=Accounting], Employee [name=Paul, salary=3000, department=Admin], Employee [name=Angel, salary=2000, department=Maint]]
+[Employee [name=Peter, salary=4000, department=IT], Employee [name=Mike, salary=3500, department=Accounting], Employee [name=Paul, salary=3000, department=Admin], Employee [name=Angel, salary=2000, department=Maint]]
