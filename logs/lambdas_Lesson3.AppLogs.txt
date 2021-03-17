@@ -1,0 +1,22 @@
+Car [make=Mitsubishi, model=Lancer, color=White, price=20000]
+Printing cars between price 18000 and 22000
+Car [make=Mitsubishi, model=Lancer, color=White, price=20000]
+Printing cars that are blue
+Car [make=Honda, model=Civic, color=Blue, price=17700]
+Car [make=Toyota, model=Camry, color=Blue, price=24000]
+Printing cars between price 18000 and 22000
+Car [make=Mitsubishi, model=Lancer, color=White, price=20000]
+Print blue cars
+Car [make=Honda, model=Civic, color=Blue, price=17700]
+Car [make=Toyota, model=Camry, color=Blue, price=24000]
+Car [make=Mitsubishi, model=Lancer, color=White, price=20000]
+Printing cars between price 18000 and 22000
+Car [make=Mitsubishi, model=Lancer, color=White, price=20000]
+Printing cars that are blue
+Car [make=Honda, model=Civic, color=Blue, price=17700]
+Car [make=Toyota, model=Camry, color=Blue, price=24000]
+Printing cars between price 18000 and 22000
+Car [make=Mitsubishi, model=Lancer, color=White, price=20000]
+Print blue cars
+Car [make=Honda, model=Civic, color=Blue, price=17700]
+Car [make=Toyota, model=Camry, color=Blue, price=24000]
