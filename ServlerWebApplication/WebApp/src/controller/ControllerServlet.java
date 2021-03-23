@@ -1,18 +1,13 @@
 package controller;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Properties;
 
-import com.oracle.wls.shaded.org.apache.xalan.xsltc.cmdline.getopt.GetOpt;
+
 
 import implementation.ConnectionManager;
 import implementation.JDBCDataAccessor;
@@ -30,7 +25,6 @@ public class ControllerServlet extends HttpServlet {
 	String propertiesFileName = "local.properties";
 
 	public void init(ServletConfig config) throws ServletException {
-		ConnectionManager.setConnectionProps(getPropertiesFromContext());
 		dao = new JDBCDataAccessor(ConnectionManager.getConnection());
 	}
 
