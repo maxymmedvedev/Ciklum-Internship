@@ -18,14 +18,11 @@ public class ConnectionManager {
   	private static Properties connectionProps;
 	
 	static {
-		//setUser();
-		
-		System.out.println(connectionURLString);
+		setUser();
 
 	}
 	//return stored connection (if any) or establish new 
 	public static Connection getConnection() {
-		setUser();
 		if(conn == null) {
 			conn = establishConnection();
 		}
