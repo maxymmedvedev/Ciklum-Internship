@@ -1,0 +1,151 @@
+<?xml version = "1.0" encoding ="UTF-8"?>
+
+<project name = "WebApp" 
+		basedir = "." 
+		default = "build-war" 
+		xmlns:if="ant:if"
+		xmlns:unless="ant:unless">
+	<property file = "build.properties" />
+	
+	
+	<property name = "projectName" value = "${ant.project.name}"/>
+	<property name = "warName" value = "${projectName}.war"/>
+	
+	<path id = "catalina-classpath">
+		<fileset dir = "${tomcat.home}/lib" /> 
+	</path>
+	
+	<!-- Defining Tomcat Catalina tasks -->
+	
+	<taskdef name="deploy" classname="org.apache.catalina.ant.DeployTask">
+		<classpath refid = "catalina-classpath" />
+    </taskdef>
+	
+	<taskdef name="undeploy" classname="org.apache.catalina.ant.UndeployTask">
+		<classpath refid = "catalina-classpath" />
+    </taskdef>
+	
+	<taskdef name="reload" classname="org.apache.catalina.ant.ReloadTask">
+		<classpath refid = "catalina-classpath" />
+    </taskdef>
+	
+	<!-- 
+	<target name = "copyLib">
+		<mkdir dir ="${projectName}/WEB-INF/lib" />
+		<copy todir = "${projectName}/WEB-INF/lib">
+			<fileset dir = "lib" />
+		</copy>
+	</target>
+	 -->
+	 
+	<!-- Building webapp -->
+	
+	<target name = "compile">	
+		<mkdir dir ="${projectName}/WEB-INF/classes" />
+		<javac srcdir = "src" 
+			destdir  = "${projectName}/WEB-INF/classes">
+			<classpath>
+				<fileset dir = "lib" />
+			</classpath>
+			
+		</javac>
+	</target>
+	
+	<target name = "build-war" depends = "compile">
+		<mkdir dir ="build" />
+		<war destfile = "build/${warName}" 
+			webxml = "${projectName}/WEB-INF/web.xml"
+			basedir = "${projectName}">
+			<lib dir = "lib" />
+		</war>
+	</target>
+	
+	<!-- Checking app/server conditions -->
+	
+	<target name = "isWebAppDeployed">
+		<condition property="webapp.isDeployed">
+			<http url="http://${tomcat.host}:${tomcat.port}/${projectName}"/>
+		</condition>
+		<echo if:set = "webapp.isDeployed"
+			message = "Web application status: deployed"
+		/>
+	</target>
+	
+	<target name = "isTomcatStarted">
+		<condition property="tomcat.isStarted">
+			<http url="http://${tomcat.host}:${tomcat.port}"/>
+		</condition>
+		<echo if:set = "tomcat.isStarted"
+			message = "Tomcat server status: running"
+		/>
+	</target>
+	
+	
+	<!-- webapp deployment -->
+	
+	<target name = "deploy-app"
+			depends = "isWebAppDeployed, build-war"
+			unless = "webapp.isDeployed">
+		<deploy
+			url = "${tomcat.manager.url}"
+			username = "${tomcat.user.name}"
+			password = "${tomcat.user.password}"
+			path = "/${projectName}" 
+			localWar = "${basedir}/build/${warName}"
+		/>	
+	</target>
+	
+	<target name = "undeploy-app"
+			depends = "isWebAppDeployed"
+			if = "webapp.isDeployed">
+			
+			<undeploy
+				url = "${tomcat.manager.url}"
+				username = "${tomcat.user.name}"
+				password = "${tomcat.user.password}"
+				path = "/${projectName}" 
+			/>
+	</target>
+	
+	<target name = "redeploy-app" >
+		<antcall target = "undeploy-app" />
+		<antcall target = "deploy-app" />
+	</target>
+	
+	<target name = "reload-app"
+			depends = "isWebAppDeployed"
+			if = "webapp.isDeployed">
+			
+			<reload
+				url = "${tomcat.manager.url}"
+				username = "${tomcat.user.name}"
+				password = "${tomcat.user.password}"
+				path = "/${projectName}" 
+			/>
+	</target>
+	
+	<!-- Server start/stop -->
+	
+	<target name="tomcat-start" 
+			depends = "isTomcatStarted"
+			unless = "tomcat.isStarted">
+			
+        <java classname="org.apache.catalina.startup.Bootstrap" fork="true">
+             <classpath path="${tomcat.home}/bin/bootstrap.jar:
+			 ${tomcat.home}/bin/tomcat-juli.jar" />
+            <jvmarg value="-Dcatalina.home=${tomcat.home}"/>
+        </java>
+    </target>
+	
+	<target name="tomcat-stop"
+			depends = "isTomcatStarted"
+			if = "tomcat.isStarted">
+        <java classname="org.apache.catalina.startup.Bootstrap" fork="true">
+             <classpath path="${tomcat.home}/bin/bootstrap.jar:
+			 ${tomcat.home}/bin/tomcat-juli.jar" />
+            <jvmarg value="-Dcatalina.home=${tomcat.home}"/>
+            <arg line="stop"/>
+        </java>
+    </target>
+	
+</project>
